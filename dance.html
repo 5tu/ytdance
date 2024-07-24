@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dance</title>
+    <title>ytdance</title>
     <style>
         body,
         html {
@@ -93,6 +93,14 @@
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.ENDED) {
                 event.target.playVideo();
+            }
+        }
+
+        function onPlayerError(event) {
+            if (event.data === 101 || event.data === 150) {
+                alert("This video can't be played outside of YouTube");
+            } else {
+                alert("An error occurred while playing the video");
             }
         }
     </script>
