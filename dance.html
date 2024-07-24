@@ -42,9 +42,6 @@
         Your browser does not support features this site needs to work correctly.
     </video>
 
-
-    <div id="youtube-audio"></div>
-
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         function getYouTubeID(url) {
@@ -59,9 +56,9 @@
             const videoId = getYouTubeID(youtubeUrl);
 
             if (videoId) {
-                const player = new YT.Player('youtube-audio', {
-                    height: '10',
-                    width: '10',
+                new YT.Player('youtube-audio', {
+                    height: '0',
+                    width: '0',
                     videoId: videoId,
                     playerVars: {
                         autoplay: 1,
@@ -80,7 +77,6 @@
 
         function onPlayerReady(event) {
             event.target.unMute();
-            event.target.setVolume(100);
             event.target.playVideo();
         }
 
