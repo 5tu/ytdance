@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ytdance</title>
     <style>
+
+@import url('https://fonts.cdnfonts.com/css/passeio-test');  
+
+
         body,
         html {
             margin: 0;
@@ -28,10 +32,37 @@
         #youtube-audio {
             position: absolute;
         }
+
+        #back-button {
+
+            position: absolute;
+            bottom: 1rem;
+            left: calc(50vw - 4rem);
+            width: 8rem;
+            z-index: 9999;
+
+            font-family: 'Passeio Test', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 0.5rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #000000;
+            color: white;
+            cursor: pointer;
+
+        }
+        #back-button:hover {
+            background-color: #ffffff;
+            color: #000000;
+            cursor:grab;
+        }
     </style>
 </head>
 
 <body>
+
+    <button id="back-button" onclick="window.location.href='index.html'">go back</button>
 
   <video id="background-video" autoplay loop>
         <source src="eld.webm" type="video/webm">
