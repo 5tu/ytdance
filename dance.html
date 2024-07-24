@@ -103,11 +103,12 @@
                 videoId: videoId,
                 playerVars: {
                     autoplay: 1,
-                    loop: 0,
+                    loop: 1,
                     playlist: videoId
                 },
                 events: {
                     'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
                     'onError': onPlayerError
                 }
             });
@@ -122,16 +123,18 @@
     }
 
     function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                window.location.href = 'index.html';
-            }
+        console.log('Player state changed:', event.data);
+        if (event.data === YT.PlayerState.ENDED) {
+            console.log('Video ended, returning to index page.');
+            window.location.href = 'index.html';
         }
+    }
 
     function onPlayerError(event) {
         if (event.data === 101 || event.data === 150) {
-            alert("Video can't be loaded outside of YouTube");
+            alert("Video can't be embedded");
         } else {
-            alert('An error occurred while loading the YouTube video');
+            alert('An error occurred while playing the video.');
         }
     }
 
