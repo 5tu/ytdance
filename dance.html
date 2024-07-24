@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dance</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url(bg4.jpg);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: top center;
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video id="background-video" autoplay loop muted>
+        <source src="f.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+
+    <div id="youtube-audio"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        function getYouTubeID(url) {
+            const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        function onYouTubeIframeAPIReady() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const youtubeUrl = urlParams.get('youtube-url');
+            const videoId = getYouTubeID(youtubeUrl);
+
+            if (videoId) {
+                const player = new YT.Player('youtube-audio', {
+                    height: '600',
+                    width: '600',
+                    videoId: videoId,
+                    playerVars: {
+                        autoplay: 1,
+                        loop: 1,
+                        playlist: videoId
+                    },
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            } else {
+                alert('Invalid YouTube URL');
+            }
+        }
+
+        function onPlayerReady(event) {
+            event.target.unMute();
+            event.target.setVolume(100);
+            event.target.playVideo();
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                event.target.playVideo();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
