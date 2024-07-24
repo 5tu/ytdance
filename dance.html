@@ -42,7 +42,9 @@
 <div id="youtube-audio"></div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
+    let player;
     function getYouTubeID(url) {
         const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
         const match = url.match(regex);
@@ -50,30 +52,36 @@
     }
 
     function onYouTubeIframeAPIReady() {
-        setTimeout(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const youtubeUrl = urlParams.get('youtube-url');
-            const videoId = getYouTubeID(youtubeUrl);
+        initializePlayer();
+    }
 
-            if (videoId) {
-                new YT.Player('youtube-audio', {
-                    height: '0',
-                    width: '0',
-                    videoId: videoId,
-                    playerVars: {
-                        autoplay: 1,
-                        loop: 1,
-                        playlist: videoId
-                    },
-                    events: {
-                        'onReady': onPlayerReady,
-                        'onError': onPlayerError
-                    }
-                });
-            } else {
-                alert('Invalid YouTube URL');
+    function initializePlayer() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const youtubeUrl = urlParams.get('youtube-url');
+        const videoId = getYouTubeID(youtubeUrl);
+
+        if (videoId) {
+            if (player) {
+                player.destroy();
             }
-        }, 1000); // 1 second delay
+
+            player = new YT.Player('youtube-audio', {
+                height: '0',
+                width: '0',
+                videoId: videoId,
+                playerVars: {
+                    autoplay: 1,
+                    loop: 1,
+                    playlist: videoId
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onError': onPlayerError
+                }
+            });
+        } else {
+            alert('Invalid YouTube URL');
+        }
     }
 
     function onPlayerReady(event) {
@@ -88,6 +96,12 @@
             alert('An error occurred while playing the video.');
         }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof YT !== 'undefined' && YT && YT.Player) {
+            initializePlayer();
+        }
+    });
 </script>
 
 </body>
