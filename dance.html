@@ -37,10 +37,11 @@
 
 <body>
 
-    <video id="background-video" autoplay loop muted>
+ <!--   <video id="background-video" autoplay loop muted>
         <source src="eld.webm" type="video/webm">
         Your browser does not support features this site needs to work correctly.
     </video>
+-->
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
@@ -57,8 +58,8 @@
 
             if (videoId) {
                 new YT.Player('youtube-audio', {
-                    height: '0',
-                    width: '0',
+                    height: '360',
+                    width: '360',
                     videoId: videoId,
                     playerVars: {
                         autoplay: 1,
