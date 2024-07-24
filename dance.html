@@ -66,8 +66,8 @@
 
             if (videoId) {
                 const player = new YT.Player('youtube-audio', {
-                    height: '600',
-                    width: '600',
+                    height: '0',
+                    width: '0',
                     videoId: videoId,
                     playerVars: {
                         autoplay: 1,
@@ -76,7 +76,7 @@
                     },
                     events: {
                         'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
+                        'onError': onPlayerError
                     }
                 });
             } else {
@@ -90,17 +90,11 @@
             event.target.playVideo();
         }
 
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                event.target.playVideo();
-            }
-        }
-
         function onPlayerError(event) {
             if (event.data === 101 || event.data === 150) {
-                alert("This video can't be played outside of YouTube");
+                alert("Video can't be embedded");
             } else {
-                alert("An error occurred while playing the video");
+                alert('An error occurred while playing the video.');
             }
         }
     </script>
