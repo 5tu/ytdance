@@ -16,10 +16,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url(bg4.jpg);
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: top center;
         }
 
         video {
@@ -28,7 +24,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             z-index: 1;
         }
 
@@ -42,8 +38,8 @@
 <body>
 
     <video id="background-video" autoplay loop muted>
-        <source src="f.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+        <source src="eld.webm" type="video/webm">
+        Your browser does not support features this site needs to work correctly.
     </video>
 
 
@@ -64,8 +60,8 @@
 
             if (videoId) {
                 const player = new YT.Player('youtube-audio', {
-                    height: '400',
-                    width: '400',
+                    height: '10',
+                    width: '10',
                     videoId: videoId,
                     playerVars: {
                         autoplay: 1,
