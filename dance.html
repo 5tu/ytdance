@@ -56,7 +56,6 @@
         #back-button:hover {
             background-color: #ffffff;
             color: #000000;
-            cursor:grab;
             filter: opacity(75%);
         }
     </style>
@@ -124,9 +123,9 @@
 
     function onPlayerError(event) {
         if (event.data === 101 || event.data === 150) {
-            alert("Video can't be embedded");
+            alert("Video can't be loaded outside of YouTube");
         } else {
-            alert('An error occurred while playing the video.');
+            alert('An error occurred while loading the YouTube video');
         }
     }
 
