@@ -41,23 +41,24 @@
 
 <div id="youtube-audio"></div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        function getYouTubeID(url) {
-            const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : null;
-        }
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    function getYouTubeID(url) {
+        const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
+    }
 
-        function onYouTubeIframeAPIReady() {
+    function onYouTubeIframeAPIReady() {
+        setTimeout(() => {
             const urlParams = new URLSearchParams(window.location.search);
             const youtubeUrl = urlParams.get('youtube-url');
             const videoId = getYouTubeID(youtubeUrl);
 
             if (videoId) {
                 new YT.Player('youtube-audio', {
-                    height: '360',
-                    width: '360',
+                    height: '0',
+                    width: '0',
                     videoId: videoId,
                     playerVars: {
                         autoplay: 1,
@@ -72,21 +73,22 @@
             } else {
                 alert('Invalid YouTube URL');
             }
-        }
+        }, 1000); // 1 second delay
+    }
 
-        function onPlayerReady(event) {
-            event.target.unMute();
-            event.target.playVideo();
-        }
+    function onPlayerReady(event) {
+        event.target.unMute();
+        event.target.playVideo();
+    }
 
-        function onPlayerError(event) {
-            if (event.data === 101 || event.data === 150) {
-                alert("Video can't be embedded");
-            } else {
-                alert('An error occurred while playing the video.');
-            }
+    function onPlayerError(event) {
+        if (event.data === 101 || event.data === 150) {
+            alert("Video can't be embedded");
+        } else {
+            alert('An error occurred while playing the video.');
         }
-    </script>
+    }
+</script>
 
 </body>
 
