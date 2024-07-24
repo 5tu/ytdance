@@ -29,6 +29,15 @@
             flex-direction: column;
             align-items: center;
         }
+
+        #error-message {
+            font-family: 'Passeio Test', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
+            padding-top: 1rem;
+            color: red;
+        }
+
         input[type="text"] {
             font-family: 'Passeio Test', sans-serif;
             font-size: 0.75rem;
@@ -58,8 +67,30 @@
     </style>
 </head>
     <body>
-        <form action="dance.html" method="get">
+        <form id="ytform" action="dance.html" method="get">
             <input type="text" placeholder="paste a song url from youtube" id="youtube-url" name="youtube-url" required>
             <input type="submit" value="play">
+            <div class="error-message" id="error-message"></div>
         </form>
+        
+
+        <script>
+            function getYouTubeID(url) {
+                const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+                const match = url.match(regex);
+                return match ? match[1] : null;
+            }
+    
+            document.getElementById('ytform').addEventListener('submit', function(event) {
+                const youtubeUrl = document.getElementById('youtube-url').value;
+                const videoId = getYouTubeID(youtubeUrl);
+                if (!videoId) {
+                    event.preventDefault();
+                    document.getElementById('error-message').textContent = 'Invalid YouTube URL. Please enter a valid URL.';
+                } else {
+                    document.getElementById('error-message').textContent = '';
+                }
+            });
+        </script>
+
     </body>
